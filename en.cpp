@@ -4,16 +4,19 @@
 #include<stdlib.h>
  
 using namespace std;
+//Dictionary of all characters frequently used in writing a message. 
 char a[]={'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
           'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
           '0','1','2','3','4','5','6','7','8','9','.',',','!','?','(',')'};
 long int p, q, n, t, flag, e[100], d[100], temp[100], j, m[100], en[100], i, enc[100];
 char msg[100];
+
 int prime(long int);
 void ce();
 long int cd(long int);
 void encrypt();
 void decrypt();
+
  int prime(long int pr)
 {
     long int i;
@@ -25,7 +28,8 @@ void decrypt();
     }
     return 1;
 }
- int main()
+
+int main()
 {
     cout << "\nENTER TWO PRIME NUMBERS	";
     cin >> p >> q;
@@ -37,6 +41,7 @@ void decrypt();
     cout << "\nENTER MESSAGE\n";
     fflush(stdin);
     cin >> msg;
+//Create a hash table to point each character in the message to its corresponding position in the dictionary. 
     for (i = 0; msg[i] != '\0'; i++)
     {
 		if(msg[i]>96 && msg[i]<123)
@@ -61,15 +66,20 @@ void decrypt();
 			m[i]=68;
 			
 	}
+//display the original message, using the hash table created above.	
 	for(i=0; msg[i]!='\0'; i++)
 		cout<<a[m[i]];
     n = p * q;
     t = (p - 1) * (q - 1);
+	
+//generate all possible public-private key pairs(ce: cypher text encryption)	
     ce();
     cout << "\nPOSSIBLE VALUES OF e AND d ARE\n";
     for (i = 0; i < j - 1; i++)
         cout << e[i] << "\t" << d[i] << "\n";
+//encrypt the message. Display the encrypted message.	
     encrypt();
+//decrypt the message.	Display the original message.
     decrypt();
     return 0;
 }
@@ -85,6 +95,7 @@ void ce()
         if (flag == 1 && i != p && i != q)
         {
             e[k] = i;
+//Generate a private key corresponding to the current public key. 		
             flag = cd(e[k]);
             if (flag > 0)
             {
@@ -122,6 +133,7 @@ void encrypt()
 			cout<<a[ct];
 				
 	}
+//Terminating marker to identify the end of a messsage.	
 	en[i]=-1;
 	cout<<"\n\n";
 }
